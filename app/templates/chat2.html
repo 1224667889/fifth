@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<title>聊天室</title>
+<link rel="stylesheet" type="text/css" href="../static/css/chat.css">
+<script type="text/javascript" src="../static/js/jquery.min.js"></script>
+<script type="text/javascript" src="../static/js/socket.io.min.js"></script>
+<script>
+
+</script>
+</head>
+<body class="keBody">
+<h1 class="keTitle">JS在线聊天对话框</h1>
+<div class="kePublic">
+
+<div class="content">
+<div class="chatBox">
+<div class="chatLeft">
+<div class="chat01">
+<div class="chat01_title">
+<ul class="talkTo">
+<li><a href="javascript:;" class="room_name"></a></li>
+<li><a href="javascript:;" class="room_hs"></a></li>
+</ul>
+</div>
+<div class="chat01_content">
+<div class="message_box mes1" style="display: block;"></div>
+</div>
+</div>
+<div class="chat02">
+<div class="chat02_title">
+<a class="chat02_title_btn ctb01" href="javascript:;"></a>
+<label class="chat02_title_t">
+<a href="http://www.jq22.com/demo/QQtalk-150203214024/chat.htm" target="_blank">聊天记录</a></label>
+<div class="wl_faces_box">
+<div class="wl_faces_content">
+<div class="title">
+<ul>
+<li class="title_name">常用表情</li><li class="wl_faces_close"><span>&nbsp;</span></li></ul>
+</div>
+<div class="wl_faces_main">
+<ul>
+<li><a href="javascript:;">
+<img src="../static/files/emo_01.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_02.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_03.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_04.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_05.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_06.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_07.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_08.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_09.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_10.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_11.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_12.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_13.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_14.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_15.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_16.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_17.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_18.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_19.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_20.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_21.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_22.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_23.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_24.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_25.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_26.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_27.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_28.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_29.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_30.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_31.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_32.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_33.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_34.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_35.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_36.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_37.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_38.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_39.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_40.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_41.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_42.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_43.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_44.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_45.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_46.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_47.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_48.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_49.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_50.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_51.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_52.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_53.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_54.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_55.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_56.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_57.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_58.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_59.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_60.gif"></a></li>
+</ul>
+</div>
+</div>
+<div class="wlf_icon">
+</div>
+</div>
+</div>
+<div class="chat02_content">
+<textarea id="textarea"></textarea>
+</div>
+<div class="chat02_bar">
+<ul>
+<li style="left: 20px; top: 10px; padding-left: 30px;"></li>
+<li style="right: 5px; top: 5px;"><a href="javascript:;">
+<img src="../static/files/send_btn.jpg"></a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="chatRight">
+<div class="chat03">
+<div class="chat03_title">
+<label class="chat03_title_t">
+成员列表</label>
+</div>
+<div class="chat03_content" style="height:370px;overflow:auto;">
+    <ul></ul>
+</div>
+</div>
+</div>
+<div style="clear: both;">
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="xl-chrome-ext-bar" id="xl_chrome_ext_{4DB361DE-01F7-4376-B494-639E489D19ED}" style="display: none;">
+    <div class="xl-chrome-ext-bar__logo"></div>
+    <a id="xl_chrome_ext_download" href="javascript:;" class="xl-chrome-ext-bar__option">下载视频</a>
+    <a id="xl_chrome_ext_close" href="javascript:;" class="xl-chrome-ext-bar__close"></a>
+</div>
+<script>
+
+	$(document).ready(function(){
+        function init() {
+            var url = document.location.toString();
+　　　　    var arrUrl = url.split("//");
+　　　　    var start = arrUrl[1].indexOf("/");
+　　　　    var relUrl = arrUrl[1].substring(start);//stop省略，截取从start开始到结尾的所有字符
+　　　　if(relUrl.indexOf("?") != -1){
+　　　　　　relUrl = relUrl.split("?")[0];
+　　　　}
+            $.ajax({
+                url: "/init",   //对应flask中的路由
+                type: "POST", //请求方法
+                data: { url: relUrl },   //传送的数据
+                success: function (data) {  //成功得到返回数据后回调的函数
+                    window.a=1;
+                    window.b=data.user.head;
+                    window.username=data.user.name;
+                    window.room=data.room;
+                    window.hs=data.hs;
+                    var arr=data.list;
+                    for(j = 0,len=arr.length; j < len; j++) {
+                        var i="<li class=''><label class="+arr[j].status+"></label><a href='javascript:;'><img src='../"+arr[j].head+"'></a><a href='javascript:;' class='chat03_name'>"+arr[j].name+"</a></li>"
+		                $(".chat03_content ul").append(i);
+                    };
+                    $(".room_name").append(room)
+                    $(".room_hs").append(hs)
+                }
+            })
+        };
+        init();
+	    function time() {
+        //日期
+		var e=new Date,f="";
+            f+=e.getFullYear()+"-",
+            f+=e.getMonth()+1+"-",
+            f+=e.getDate()+"  ",
+            f+=e.getHours()+":",
+            f+=e.getMinutes()+":",
+            f+=e.getSeconds();
+        return f;
+    };
+	    function mes() {
+		    var messages=$("#textarea").val();
+            function h(){
+            //表情替代
+            -1!=messages.indexOf("*#emo_")&&(messages=messages.replace("*#","<img src='../static/files/").replace(".gif#*",".gif'/>"),h())
+            };
+		    h();
+		    return messages;
+        };
+	    function e(head, name, messages, f) {
+		//head头像,name用户名,messages内容,f时间
+		var i="<div class='message clearfix'><div class='user-logo'><img src='../"+head+"'/>"+"</div>"+"<div class='wrap-text'>"+"<h5 class='clearfix'>"+name+"</h5>"+"<div>"+messages+"</div>"+"</div>"+"<div class='wrap-ri'>"+"<div clsss='clearfix'><span>"+f+"</span></div>"+"</div>"+"<div style='clear:both;'></div>"+"</div>";
+		null!=messages&&""!=messages?($(".mes"+a).append(i),
+		$(".chat01_content").scrollTop($(".mes"+a).height()),
+		$("#textarea").val(""),message()):alert("\u8bf7\u8f93\u5165\u804a\u5929\u5185\u5bb9!")
+	};
+        //下面的是表情框
+        $(".ctb01").mouseover(function(){$(".wl_faces_box").show()}).mouseout(function(){$(".wl_faces_box").hide()}),
+            $(".wl_faces_box").mouseover(function(){$(".wl_faces_box").show()}).mouseout(function(){$(".wl_faces_box").hide()}),
+            $(".wl_faces_main img").click(
+            function(){
+                var a=$(this).attr("src");
+                $("#textarea").val($("#textarea").val()+"*#"+a.substr(a.indexOf("img/")+16,18)+"#*"),
+                $("#textarea").focusEnd(),
+                $(".wl_faces_box").hide()
+            }),
+        //发送按钮
+        $(".chat02_bar img").click(function(){e(b, username, mes(), time())}),
+		$.fn.setCursorPosition=function(a){
+			return 0==this.lengh?this:$(this).setSelection(a,a)
+        },
+		$.fn.setSelection=function(a,b){
+			if(0==this.lengh)
+				return this;
+			if(input=this[0],input.createTextRange){
+				var c=input.createTextRange();
+				c.collapse(!0),
+				c.moveEnd("character",b),
+				c.moveStart("character",a),
+				c.select()}
+			else
+				input.setSelectionRange&&(input.focus(),input.setSelectionRange(a,b));
+				return this
+		},
+		$.fn.focusEnd=function(){this.setCursorPosition(this.val().length)};
+
+        window.socket
+        socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
+        //alert('http://' + document.domain + ':' + location.port + '/chat')
+        socket.on('connect', function() {
+            socket.emit('joined', {});
+        });
+
+        socket.on('status', function(data) {
+            //$('#chat').val($('#chat').val() + '<' + data.user + data.msg + '  ' + data.time +'>\n');
+            //$('#chat').scrollTop($('#chat')[0].scrollHeight);
+            e(data.head, data.username, data.msg, data.time);
+        });
+
+        socket.on('message', function(data) {
+            //$('#chat').val($('#chat').val() + data.msg + '\n');
+            //$('#chat').scrollTop($('#chat')[0].scrollHeight);
+            //alert(data.msg)
+            //e(data.head, data.username, data.msg, data.time);
+            e(data.head, data.username, data.msg, data.time);
+        });
+
+        $('#textarea').keypress(function(key) {
+            var code = key.keyCode || key.which;
+            if (code == 13) {
+                key.preventDefault();
+                text = $('#textarea').val();
+                if (text ==''){
+                    alert('内容不能为空!!')
+                }
+                else {
+                $('#textarea').val('');
+                socket.emit('text', {msg: text});
+                //e(b, username, mes(), time());
+                }
+
+            }
+        });
+    });
+    function leave_room() {
+        socket.emit('left', {}, function() {
+            socket.disconnect();
+            // go back to the login page
+            window.location.href = "{{ url_for('main.index') }}";
+        });
+    }
+</script>
+</body>
+</html>
