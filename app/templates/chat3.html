@@ -26,10 +26,7 @@
                         alert(data.msg);
                         window.location.href = "{{ url_for('main.index') }}"
                     }
-                }
-            })
-        }
-        online();
+                    else{
         window.e = function(head, name, messages, f) {
                 //head头像,name用户名,messages内容,f时间
                 messages=rep(messages)
@@ -128,7 +125,6 @@
 
             return messages;
         };
-
         //表情框
         $(".ctb01").mouseover(function () {
             $(".wl_faces_box").show()
@@ -179,8 +175,14 @@
             $.fn.focusEnd = function () {
                 this.setCursorPosition(this.val().length)
             };
-    });
 
+
+
+                    }
+                }
+            })
+        }
+        online();
         window.onbeforeunload=function() {
             var url = document.location.toString();
             var arrUrl = url.split("//");
@@ -198,6 +200,9 @@
         }
             leave_room();
         };
+    });
+
+
 
         </script>
 </head>
@@ -320,7 +325,7 @@
 </div>
 </div>
 <div class="chat02_content">
-<textarea id="textarea"></textarea>
+<textarea id="textarea" maxlength="255"></textarea>
 </div>
 <div class="chat02_bar">
 <ul>

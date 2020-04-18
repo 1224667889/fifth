@@ -3,6 +3,14 @@ import functools
 from . import main
 from app.models import User, Room, Collect
 from app import db
+from .re_test import re_password, re_username
+import os,random,string,base64
+
+def random_name(perfix,length=16):
+    # 生成a-z 0-9 A-Z
+    str = string.ascii_letters + string.digits
+    return ''.join(random.sample(str, length))+'.'+perfix
+
 
 def is_login(func):
     # 修饰器 在原修饰器下加 @is_login 若无登录，则跳转至登录
@@ -21,6 +29,71 @@ def isnot_login(func):
             return "无法重复登录"
         return func(*args, **kwargs)
     return inner
+
+@main.route('/headupload',methods=['POST'])
+@is_login
+def headupload():
+    file = request.form['image']
+    file = file.replace("data:image/png;base64,", "")
+    print(file)
+    img = base64.b64decode(file)
+
+    filename = 'static/upload/' + random_name("png")
+    fh = open("app/" + filename, "wb")
+    fh.write(img)
+    fh.close()
+    username = session.get('username', '')
+    user = User.query.filter_by(username=username).first()
+    user.head = filename
+    db.session.commit()
+    return {"result": "ok", "file": filename}
+
+
+
+@main.route('/change',methods=['POST'])
+@is_login
+def change():
+    username = session.get('username', '')
+    user = User.query.filter_by(username=username).first()
+    if user:
+        password0 = request.form.get("password0")#p0原密码
+        password = request.form.get("password")#p新密码
+        password2 = request.form.get("password2")#p2确认密码
+        if user.password == password0:
+            if password == password2:
+                if re_password(password):
+                    if password == user.password:
+                        return {"code": 1, "msg": "新旧密码一致"}
+                    else:
+                        user.password = password
+                        db.session.commit()
+                        return {"code": 0, "msg": "修改密码成功"}
+                else:
+                    return {"code": 1, "msg": "新密码格式出错(6-18位,不能使用纯数字!)"}
+            else:
+                return {"code": 1, "msg": "两次密码不一致"}
+        else:
+            return {"code": 1, "msg": "原密码错误"}
+    else:
+        return {"code": 1, "msg": "用户不存在"}
+
+@main.route('/changedata',methods=['POST'])
+@is_login
+def changedata():
+    username = session.get('username', '')
+    user = User.query.filter_by(username=username).first()
+    if user:
+        try:
+            user.name = request.form.get("name")
+            db.session.commit()
+            print(user.name)
+            return {"code": 0, "msg": "修改成功"}
+        except Exception as e:
+            print(e)
+            db.session.rollback()
+            return {"code": 1, "msg": "无法进行修改"}
+    else:
+        return {"code": 1, "msg": "用户错误"}
 
 @main.route('/room/<string:hs>')
 @is_login
@@ -118,6 +191,18 @@ def users():
         otherslist.append(new_user)
     return {"list": otherslist}
 
+@main.route('/me', methods=['POST'])
+def user():
+    username = session.get('username', '')
+    user = User.query.filter_by(username=username).first()
+    return {"username": user.username, "name": user.name, "head": user.head}
+@main.route('/other', methods=['POST'])
+def otr():
+    #username = session.get('username', '')
+    id = request.form.get("id")
+    id = id.split('/')[-1]
+    user = User.query.filter_by(id=id).first()
+    return {"username": user.username, "name": user.name, "head": user.head}
 @main.route('/selfinit', methods=['POST'])
 def selfinit():
     username = session.get('username', '')
@@ -206,18 +291,21 @@ def login_in():
 def register_in():
     username = request.form.get('username')
     password = request.form.get('password')
-    user = User.query.filter_by(username=username).first()
-    if user:
-        return {"code": 1, "message": "账号已存在!"}
+    if re_username(username) and re_password(password):
+        user = User.query.filter_by(username=username).first()
+        if user:
+            return {"code": 1, "message": "账号已存在!"}
+        else:
+            try:
+                # 生成并添加用户数据
+                new_user = User(username=username, name=username, password=password)
+                db.session.add(new_user)
+                db.session.commit()
+                session['username'] = username
+                session['name'] = username
+                return {"code": 0, "message": "注册成功!"}
+            except Exception as e:
+                print(e)
+                db.session.rollback()
     else:
-        try:
-            # 生成并添加用户数据
-            new_user = User(username=username, name=username, password=password)
-            db.session.add(new_user)
-            db.session.commit()
-            session['username'] = username
-            session['name'] = username
-            return {"code": 0, "message": "注册成功!"}
-        except Exception as e:
-            print(e)
-            db.session.rollback()
+        return {"code": 1, "message": "账号或密码格式错误!"}

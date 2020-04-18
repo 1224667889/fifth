@@ -50,9 +50,14 @@ def tindex():
     session['name'] = 'mirrorlied'
     session['head'] = 'static/files/2022.jpg'
     return '初始化成功'
-@main.route('/who', methods=['GET', 'POST'])
+@main.route('/self', methods=['GET', 'POST'])
+@is_login
 def who():
-    return "用户名+"+session['name']+"房间号:"+session['room']
+    return render_template('self.html')
+@main.route('/user/<id>', methods=['GET', 'POST'])
+def other(id):
+    return render_template('user.html')
+    #return render_template('self.html')
 @main.route('/create')
 @is_login
 def create():
@@ -77,4 +82,4 @@ def register():
 @is_login
 def loginout():
     session.clear()
-    return render_template('index.html')
+    return redirect('/')
