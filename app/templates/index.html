@@ -1,9 +1,69 @@
-<!DOCTYPE html>
+<!DOCTYPE>
+<html>
 <head>
-<meta charset="UTF-8">
-<title>首页</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>聊天室引导页</title>
 </head>
+
+<link rel="stylesheet" type="text/css" href="../static/css/base.css" />
+
+<script type="text/javascript" src="../static/js/jquery2.js"></script>
+<script type="text/javascript" src="../static/js/jquery.easing.js"></script>
+<script type="text/javascript" src="../static/js/base.js"></script>
+<style type="text/css">
+	.yqlj div{
+		line-height:25px;
+		padding:5px 55px;
+	}
+	.footer{
+		width:100%;
+		text-align:center;
+		}
+	.footer li{
+		width:100%;
+		line-height:26px;
+		list-style:none;
+		
+		}
+</style>
 <body>
-<h1>这是首页</h1>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div class="s-mod w1100" style="height:310px">
+	<div class="s-mod-loding"><img src="images/loading_d.gif"></div>
+	<ul>
+    		<a href="/create" target="_blank"><li class="s-mod-item" w="266" h="266" l="0" t="0" bg="#6ad62f" cbg="#54ce11">
+		<div class="s-mod-wrap">
+				<div class="s-mod-def"><span>创建房间</span></div>
+				<div class="s-mod-cur"><span>创建一个房间开始你的表演</span></div>
+		</li></a>
+        		<a href="/login" target="_blank"><li class="s-mod-item" w="227" h="127" l="278" t="0" bg="#1CA1E2" cbg="#1182BA">
+			<div class="s-mod-wrap">
+				<div class="s-mod-def"><span>登录</span></div>
+				<div class="s-mod-cur"><span>登录你的聊天账号</span></div>
+		</li></a>
+		<a href="/register" target="_blank"><li class="s-mod-item" w="305" h="127" l="517" t="0" bg="#aa5096" cbg="#922a7b">
+			<div class="s-mod-wrap">
+				<div class="s-mod-def"><span>注册</span></div>
+				<div class="s-mod-cur"><span>还没账号？！点击注册一个账号</span></div>
+		</li></a>
+       <a href="self" target="_blank"> <li class="s-mod-item" w="305" h="127" l="278" t="139" bg="#fb48a5" cbg="#f91e90">
+			<div class="s-mod-wrap">
+				<div class="s-mod-def"><span>个人界面</span></div>
+				<div class="s-mod-cur"><span>在这里你可以更换你的马甲(误)</span></div>
+		</li></a>
+		<a href="loginout" target="_blank"><li class="s-mod-item" w="227" h="127" l="595" t="139" bg="#FFD302" cbg="#EAC203">
+			<div class="s-mod-wrap">
+				<div class="s-mod-def"><span>退出登录</span></div>
+				<div class="s-mod-cur"><span>这是要开小号吗？？</span></div>
+			</div>
+		</li></a>
+      <a href="/join" target="_blank">  <li class="s-mod-item" w="266" h="266" l="835" t="0" bg="#e8443a" cbg="#d92e24">
+			<div class="s-mod-wrap">
+				<div class="s-mod-def"><span>加入房间</span></div>
+				<div class="s-mod-cur"><span>通过房间号和密码加入指定房间</span></div>
+			</div>
+		</li></a>
+	</ul>
+</div>
 </body>
 </html>

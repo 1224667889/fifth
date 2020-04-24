@@ -35,7 +35,7 @@ def isnot_login(func):
 def headupload():
     file = request.form['image']
     file = file.replace("data:image/png;base64,", "")
-    print(file)
+
     img = base64.b64decode(file)
 
     filename = 'static/upload/' + random_name("png")
@@ -49,8 +49,7 @@ def headupload():
     return {"result": "ok", "file": filename}
 
 
-
-@main.route('/change',methods=['POST'])
+@main.route('/change', methods=['POST'])
 @is_login
 def change():
     username = session.get('username', '')
@@ -104,7 +103,7 @@ def room(hs):
     inhs = session.get('room', '')
     if room:
         if not inhs:
-            return redirect(url_for('.join_room', name=room.name))
+            return redirect(url_for('.join_room', name=room.hs))
         else:
             key = session.get('key', '')
             if key == hs + room.password:
@@ -117,7 +116,7 @@ def room(hs):
                     #管理员
                     print('gly')
                     #return render_template('chat.html', room=room.name, hs=room.hs)
-                    return render_template('chat3.html')
+                    return render_template('chat4.html')
                 else:
                     #用户
                     #return render_template('chat.html', room=room.name, hs=room.hs)
@@ -153,7 +152,7 @@ def init():
             "time": i.addtime.strftime('%Y-%m-%d %H:%M:%S')
         }
         comments_list.append(new_comment)
-    return {"user": user, "room": room.name, "hs": str(hash(room.name)), "comments": comments_list}
+    return {"user": user, "room": room.name, "hs": room.hs, "comments": comments_list, "head": room.head}
 
 @main.route('/online', methods=['POST'])
 def online():
@@ -178,18 +177,22 @@ def users():
     room = Room.query.filter_by(hs=hs).first()
     others = room.collects
     otherslist = []
+    l_in = 0
+    l_out = 0
     for i in others:
         if i.on:
             status = "online"
+            l_in += 1
         else:
             status = "offline"
+        l_out += 1
         new_user = {
             "head": i.user.head,
             "name": i.user.name,
             "status": status
         }
         otherslist.append(new_user)
-    return {"list": otherslist}
+    return {"list": otherslist, "l_in": l_in, "l_out": l_out}
 
 @main.route('/me', methods=['POST'])
 def user():
@@ -213,6 +216,7 @@ def selfinit():
         new_user = {
             "head": i.room.head,
             "name": i.room.name,
+            "hs": i.room.hs,
             "status": "online"
         }
         roomslist.append(new_user)
@@ -223,35 +227,40 @@ def selfinit():
 def create_in():
     username = request.form.get('username')
     password = request.form.get('password')
-    room = Room.query.filter_by(name=username).first()
-    if room:
-        return {"code": 1, "message": "房间名已被占用！", "html": "/create"}
-    else:
-        #不存在就新建
-        try:
-            # 生成并添加房间数据
-            user = User.query.filter_by(username=session['username']).first()
-            hs = str(hash(username))
-            new_room = Room(name=username, password=password, user_id=user.id, hs=hs)
-            db.session.add(new_room)
-            db.session.commit()
-            session['room'] = hs
-            session['key'] = hs + password
-            return {"code": 0, "message": "创建成功!", "html": "/room/" + hs}
-        except Exception as e:
-            print(e)
-            db.session.rollback()
-            return '生成错误'
+    hs = hash(username)
+    while True:
+        room = Room.query.filter_by(hs=hs).first()
+        if room:
+            hs += 1
+        else:
+            break
+    hs =str(hs)
+    #不存在就新建
+    try:
+        # 生成并添加房间数据
+        user = User.query.filter_by(username=session['username']).first()
+        new_room = Room(name=username, password=password, user_id=user.id, hs=hs, head="static/upload/room.gif")
+        db.session.add(new_room)
+        db.session.commit()
+        collect = Collect(user_id=user.id, room_id=new_room.id)
+        db.session.add(collect)
+        db.session.commit()
+        session['room'] = hs
+        session['key'] = hs + password
+        return {"code": 0, "message": "创建成功!", "html": "/room/" + hs}
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return {"code": 1, "message": '生成错误'}
 
 @main.route('/join/in', methods=['POST'])
 @is_login
 def join_in():
-    username = request.form.get('username')
+    hs = request.form.get('username')
     password = request.form.get('password')
-    room = Room.query.filter_by(name=username).first()
+    room = Room.query.filter_by(hs=hs).first()
     if room:
         if password == room.password:
-            hs = str(hash(username))
             session['key'] = hs + password
             session['room'] = hs
             user = User.query.filter_by(username=session['username']).first()
@@ -298,7 +307,7 @@ def register_in():
         else:
             try:
                 # 生成并添加用户数据
-                new_user = User(username=username, name=username, password=password)
+                new_user = User(username=username, name=username, password=password, head="static/upload/index.png")
                 db.session.add(new_user)
                 db.session.commit()
                 session['username'] = username

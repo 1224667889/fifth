@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>聊天室</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/chat.css">
+    <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/js/socket.io.min.js"></script>
+    <script type="text/javascript" src="../static/js/room.js"></script>
+</head>
+
+<body class="keBody">
+<h1 class="keTitle"></h1>
+<img src=""class="room-logo">
+<p>聊天室地址--><a class="web_index"></a><--聊天室地址</p>
+<div class="kePublic">
+<div class="content">
+<div class="chatBox">
+<div class="chatLeft">
+<div class="chat01">
+<div class="chat01_title">
+<ul class="talkTo">
+<li><a href="javascript:;" class="room_name"></a></li>
+<li><a href="javascript:;" class="room_hs"></a></li>
+</ul>
+</div>
+<div class="chat01_content">
+<div class="message_box mes1" style="display: block;"></div>
+</div>
+</div>
+<div class="chat02">
+<div class="chat02_title">
+<a class="chat02_title_btn ctb01" href="javascript:;"></a>
+<div class="wl_faces_box">
+<div class="wl_faces_content">
+<div class="title">
+<ul>
+<li class="title_name">常用表情</li><li class="wl_faces_close"><span>&nbsp;</span></li></ul>
+</div>
+<div class="wl_faces_main">
+<ul>
+<li><a href="javascript:;">
+<img src="../static/files/emo_01.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_02.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_03.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_04.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_05.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_06.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_07.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_08.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_09.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_10.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_11.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_12.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_13.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_14.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_15.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_16.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_17.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_18.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_19.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_20.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_21.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_22.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_23.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_24.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_25.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_26.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_27.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_28.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_29.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_30.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_31.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_32.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_33.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_34.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_35.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_36.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_37.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_38.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_39.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_40.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_41.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_42.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_43.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_44.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_45.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_46.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_47.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_48.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_49.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_50.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_51.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_52.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_53.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_54.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_55.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_56.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_57.gif"></a></li>
+<li><a href="javascript:;">
+<img src="../static/files/emo_58.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_59.gif"></a></li><li><a href="javascript:;">
+<img src="../static/files/emo_60.gif"></a></li>
+</ul>
+</div>
+</div>
+<div class="wlf_icon">
+</div>
+</div>
+</div>
+<div class="chat02_content">
+<textarea id="textarea" maxlength="255"></textarea>
+</div>
+<div class="chat02_bar">
+<ul>
+<li style="left: 20px; top: 10px; padding-left: 30px;"></li>
+<li style="right: 5px; top: 5px;"><a href="javascript:;">
+<img src="../static/files/send_btn.jpg"></a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="chatRight">
+<div class="chat03">
+<div class="chat03_title">
+<label class="chat03_title_t">
+    <b>a</b>
+</label>
+</div>
+<div class="chat03_content" style="height:370px;overflow:auto;">
+    <ul></ul>
+</div>
+</div>
+</div>
+<div class="msg">
+    <b>加载中，请检查网络状况，并耐心等待。</b>
+</div>
+</div>
+</div>
+</div>
+
+<div class="xl-chrome-ext-bar" id="xl_chrome_ext_{4DB361DE-01F7-4376-B494-639E489D19ED}" style="display: none;">
+    <div class="xl-chrome-ext-bar__logo"></div>
+    <a id="xl_chrome_ext_download" href="javascript:;" class="xl-chrome-ext-bar__option">下载视频</a>
+    <a id="xl_chrome_ext_close" href="javascript:;" class="xl-chrome-ext-bar__close"></a>
+</div>
+<div class="gly" style="" >
+    <textarea class="new_name" maxlength="12"></textarea>
+    <input type="button" class="change_room_name_btn" value="修改房间名称">
+    <input type="button" class="change_room_head_btn" value="修改房间头像">
+    <input type="button" class="close_room_btn" value="删除房间">
+</div>
+</body>
+</html>

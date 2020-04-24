@@ -4,6 +4,7 @@ from . import main
 from app.models import User, Room, Collect
 from app import db
 
+
 def is_login(func):
     # 修饰器 在原修饰器下加 @is_login 若无登录，则跳转至登录
     @functools.wraps(func)
