@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Ta的信息-用户中心</title>
+<script src="../static/js/jquery-1.8.3.min.js"></script>
+<script src="../static/js/amazeui.min.js" charset="utf-8"></script>
+<script src="../static/js/cropper.min.js" charset="utf-8"></script>
+<script src="../static/js/custom_up_img.js" charset="utf-8"></script>
+<link href="../static/css/selfstyle.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" charset="utf-8">
+    window.onload=function(){
+            var url = document.location.toString();
+            var arrUrl = url.split("//");
+            var start = arrUrl[1].indexOf("/");
+            window.relUrl = arrUrl[1].substring(start);//stop省略，截取从start开始到结尾的所有字符
+            if (relUrl.indexOf("?") != -1) {
+            relUrl = relUrl.split("?")[0];
+           };
+        $.ajax({
+            url: "/other",   //对应flask中的路由
+            type: "POST", //请求方法
+            data: {id:relUrl},   //传送的数据
+            success: function (data) {  //成功得到返回数据后回调的函数
+                $("#u_name2").append(data.name);
+                $("#u_username").append(data.username);
+                $(".img_head").attr("src","../" + data.head);
+            }
+        })
+    }
+</script>
+<style type="text/css">
+	.up-img-cover {width: 120px;height: 120px;}
+	.up-img-cover img{width: 100%;border: none;vertical-align: middle;}
+</style>
+</head>
+
+<body>
+
+<div id="headlink" class="container">
+<div class="wrap">
+<div id="sitelink">
+<a href="/" target="_blank">首页</a> <em></em>
+</div>
+</div>
+</div>
+
+
+<div class="wrap">
+<div class="box3">
+
+<div id="b_left">
+<div id="b_avatar">
+	<div class="up-img-cover"  id="up-img-touch" >
+        <img src="" id="img_head" class="img_head">
+	</div>
+	<div class="txt">
+	<h5 class="u_name"></h5>
+		<p>
+		</p>
+	</div>
+</div>
+	<ul id="b_menu">
+		<li><a href="javascript:void(0)" class="m_info">Ta的信息</a></li>
+	</ul>
+</div>
+
+<div id="b_right1" class="r1">
+<h3>Ta的信息</h3>
+	<div>
+		<table class="t_f" style="width:500px;margin-left:10px;">
+			<tbody>
+				<tr>
+					<td class="label">用户名 :</td>
+					<td class="input" id="u_username"></td>
+				</tr>
+				<tr>
+					<td class="label">昵称 :</td>
+					<td class="input" id="u_name2"></td>
+					<td id="msg_un" class="exp">&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+</div>
+</div>
+</div>
+</body>
+</html>
