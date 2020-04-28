@@ -30,6 +30,7 @@ def index():
     #session['name'] = 'mirrorlied'
     #return render_template('chat2.html')
     return render_template('index.html')
+'''
 @main.route('/a', methods=['GET', 'POST'])
 def tindex():
     db.drop_all()
@@ -51,6 +52,7 @@ def tindex():
     session['name'] = 'mirrorlied'
     session['head'] = 'static/files/2022.jpg'
     return '初始化成功'
+'''
 @main.route('/self', methods=['GET', 'POST'])
 @is_login
 def who():
@@ -79,8 +81,3 @@ def login():
 @isnot_login
 def register():
     return render_template('register.html')
-@main.route('/loginout')
-@is_login
-def loginout():
-    session.clear()
-    return redirect('/')

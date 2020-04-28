@@ -4,7 +4,7 @@ from . import main
 from app.models import User, Room, Collect
 from app import db
 from .re_test import re_password, re_username
-import os,random,string,base64
+import random, string, base64
 
 def random_name(perfix,length=16):
     # 生成a-z 0-9 A-Z
@@ -42,11 +42,16 @@ def headupload():
     fh = open("app/" + filename, "wb")
     fh.write(img)
     fh.close()
-    username = session.get('username', '')
-    user = User.query.filter_by(username=username).first()
-    user.head = filename
-    db.session.commit()
-    return {"result": "ok", "file": filename}
+    try:
+        username = session.get('username', '')
+        user = User.query.filter_by(username=username).first()
+        user.head = filename
+        db.session.commit()
+        return {"code": 0, "result": "修改成功", "file": filename}
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return {"code": 1, "result": "修改失败"}
 
 
 @main.route('/change', methods=['POST'])
@@ -86,6 +91,7 @@ def changedata():
             user.name = request.form.get("name")
             db.session.commit()
             print(user.name)
+            session['name'] = user.name
             return {"code": 0, "msg": "修改成功"}
         except Exception as e:
             print(e)
@@ -127,34 +133,40 @@ def room(hs):
         return "房间不存在"
 
 @main.route('/init', methods=['POST'])
+@is_login
 def init():
-    username = session.get('username', '')
-    #try:
-    #    user = User.query.filter_by(name=name).first()
-    #except:
-    #    return '用户参数错误'
-    user = User.query.filter_by(username=username).first()
-    user = {
-        "head": user.head,
-        "name": user.name,
-        "status": "online"
-    }
-    url = request.form.get('url')
-    hs = url.split('/')[-1]
-    room = Room.query.filter_by(hs=hs).first()
-    comments = room.comments
-    comments_list = []
-    for i in comments:
-        new_comment = {
-            "head": i.user.head,
-            "name": i.user.name,
-            "content": i.content,
-            "time": i.addtime.strftime('%Y-%m-%d %H:%M:%S')
+    try:
+        username = session.get('username', '')
+        #try:
+        #    user = User.query.filter_by(name=name).first()
+        #except:
+        #    return '用户参数错误'
+        user = User.query.filter_by(username=username).first()
+        user = {
+            "head": user.head,
+            "name": user.name,
+            "status": "online"
         }
-        comments_list.append(new_comment)
-    return {"user": user, "room": room.name, "hs": room.hs, "comments": comments_list, "head": room.head}
+        url = request.form.get('url')
+        hs = url.split('/')[-1]
+        room = Room.query.filter_by(hs=hs).first()
+        comments = room.comments
+        comments_list = []
+        for i in comments:
+            new_comment = {
+                "head": i.user.head,
+                "name": i.user.name,
+                "content": i.content,
+                "time": i.addtime.strftime('%Y-%m-%d %H:%M:%S')
+            }
+            comments_list.append(new_comment)
+        return {"code": 0, "msg": "获取成功", "user": user, "room": room.name, "hs": room.hs, "comments": comments_list, "head": room.head}
+    except Exception as e:
+        print(e)
+        return {"code": 1, "msg": "获取失败"}
 
 @main.route('/online', methods=['POST'])
+@is_login
 def online():
     _user = User.query.filter_by(username=session['username']).first()
     url = request.form.get('url')
@@ -171,6 +183,7 @@ def online():
         return {"code": 0, "msg": "成功进入房间:" + _room.name}
 
 @main.route('/users', methods=['POST'])
+@is_login
 def users():
     url = request.form.get('url')
     hs = url.split('/')[-1]
@@ -195,10 +208,12 @@ def users():
     return {"list": otherslist, "l_in": l_in, "l_out": l_out}
 
 @main.route('/me', methods=['POST'])
+@is_login
 def user():
     username = session.get('username', '')
     user = User.query.filter_by(username=username).first()
     return {"username": user.username, "name": user.name, "head": user.head}
+
 @main.route('/other', methods=['POST'])
 def otr():
     #username = session.get('username', '')
@@ -206,6 +221,7 @@ def otr():
     id = id.split('/')[-1]
     user = User.query.filter_by(id=id).first()
     return {"username": user.username, "name": user.name, "head": user.head}
+
 @main.route('/selfinit', methods=['POST'])
 def selfinit():
     username = session.get('username', '')
@@ -294,6 +310,12 @@ def login_in():
             return {"code": 1, "message": "密码错误!"}
     else:
         return {"code": 1, "message": "用户不存在!"}
+
+@main.route('/loginout')
+@is_login
+def loginout():
+    session.clear()
+    return redirect('/')
 
 @main.route('/register/in', methods=['POST'])
 @isnot_login
